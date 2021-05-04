@@ -7,7 +7,7 @@ terraform {
     }
   }
 }
-
+/*
 provider "aws" {}
 
 data "terraform_remote_state" "remote_state_prod" {
@@ -37,3 +37,4 @@ resource "aws_ecs_service" "ecs_service" {
   task_definition = aws_ecs_task_definition.task_definition.arn
   desired_count = 1
 }
+*/
