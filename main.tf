@@ -15,7 +15,7 @@ data "terraform_remote_state" "remote_state_prod" {
   config = {
     organization = "deerpark"
     workspaces = {
-      name = "terraform-aws-ecs-task-definition"
+      name = "terraform-aws-ecs-free-tier"
     }
   }
 }
