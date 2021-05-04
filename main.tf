@@ -22,6 +22,10 @@ data "terraform_remote_state" "remote_state_prod" {
 
 # data.terraform_remote_state.remote_state_prod.outputs.ecs_cluster_id
 
+resource "aws_cloudwatch_log_group" "cloudwatch_log_group" {
+  name = var.cloudwatch_group
+}
+
 data "template_file" "task_definition_template" {
   template = file("${path.module}/task_definition.json.tpl")
 }
