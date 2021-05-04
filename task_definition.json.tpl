@@ -5,6 +5,14 @@
     "name": "rent-service",
     "cpu": 128,
     "image": "696324379330.dkr.ecr.us-east-2.amazonaws.com/repo-svc-rent:latest",
-    "environment": []
+    "environment": [],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "tf-prod-rent",
+        "awslogs-region": "us-east-2",
+        "awslogs-stream-prefix": "tf-rent"
+      }
+    }
   }
 ]
