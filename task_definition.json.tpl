@@ -9,7 +9,7 @@
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
-        "awslogs-group": "${var.cloudwatch_group}",
+        "awslogs-group": "temp",
         "awslogs-region": "us-east-2",
         "awslogs-stream-prefix": "tf-rent"
       }
