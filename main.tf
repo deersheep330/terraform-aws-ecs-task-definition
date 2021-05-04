@@ -1,17 +1,22 @@
-/*data "terraform_remote_state" "remote_state_prod" {
-    backend = "s3"
-    config = {
-        bucket  = "deerpark-terraform-state-prod"
-        key     = "network/terraform.tfstate"
+terraform {
+  backend "remote" {
+    hostname = "app.terraform.io"
+    organization = "deerpark"
+    workspaces {
+      name = "terraform-aws-ecs-task-definition"
     }
-}*/
+  }
+}
 
-module "example" {
-  source   = "MitocGroup/terraform-remote-state/aws"
-  version  = "0.0.8"
-  config   = {
-    bucket   = "deerpark-terraform-state-prod"
-    key      = "network/terraform.tfstate"
+provider "aws" {}
+
+data "terraform_remote_state" "remote_state_prod" {
+  backend = "remote"
+  config = {
+    organization = "deerpark"
+    workspaces = {
+      name = "terraform-aws-ecs-task-definition"
+    }
   }
 }
 
@@ -22,13 +27,13 @@ data "template_file" "task_definition_template" {
 }
 
 resource "aws_ecs_task_definition" "task_definition" {
-  family                = "worker"
+  family = "tf-prod-task-definition"
   container_definitions = data.template_file.task_definition_template.rendered
 }
 
-resource "aws_ecs_service" "worker" {
-  name            = "worker"
-  cluster         = data.terraform_remote_state.remote_state_prod.outputs.ecs_cluster_id
+resource "aws_ecs_service" "ecs_service" {
+  name = "tf-prod-ecs-service"
+  cluster = data.terraform_remote_state.remote_state_prod.outputs.ecs_cluster_id
   task_definition = aws_ecs_task_definition.task_definition.arn
-  desired_count   = 1
+  desired_count = 1
 }
