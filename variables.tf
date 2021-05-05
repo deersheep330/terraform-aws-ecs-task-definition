@@ -1,4 +1,10 @@
 variable "cloudwatch_group" {
   type = string
-  default = "tf-prod-ecs-cloudwatch"
+  default = "deerpark-ecs-cloudwatch"
+}
+
+variable "name_prefix" {
+  description = "Name prefix of each resources"
+  type = string
+  default = "deerpark"
 }
