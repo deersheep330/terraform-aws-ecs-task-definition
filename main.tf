@@ -24,8 +24,8 @@ resource "aws_cloudwatch_log_group" "cloudwatch_log_group" {
   name = var.cloudwatch_group
 }
 
-data "template_file" "template" {
-  template = file("${path.module}/task_definition.json.tpl")
+data "template_file" "container_definition" {
+  template = file("${path.module}/container_definition.json.tpl")
   vars = {
     awslogs_group = var.cloudwatch_group
     awslogs_region = data.aws_region.region.name
@@ -35,7 +35,7 @@ data "template_file" "template" {
 
 resource "aws_ecs_task_definition" "ecs_task_definition" {
   family = "${var.name_prefix}-ecs-task-definition"
-  container_definitions = data.template_file.template.rendered
+  container_definitions = data.template_file.container_definition.rendered
 }
 
 resource "aws_ecs_service" "ecs_service" {
