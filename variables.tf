@@ -8,3 +8,13 @@ variable "name_prefix" {
   type = string
   default = "deerpark"
 }
+
+variable "line_token" {
+  type = string
+  default = "line_token"
+}
+
+variable "yu_line_token" {
+  type = string
+  default = "yu_line_token"
+}

@@ -27,6 +27,9 @@ resource "aws_cloudwatch_log_group" "cloudwatch_log_group" {
 data "template_file" "container_definition" {
   template = file("${path.module}/container_definition.json.tpl")
   vars = {
+    db_connection_url = data.terraform_remote_state.remote_state.outputs.rds_connection_url
+    line_token = var.line_token
+    yu_line_token = var.yu_line_token
     awslogs_group = var.cloudwatch_group
     awslogs_region = data.aws_region.region.name
     awslogs_prefix = var.name_prefix
