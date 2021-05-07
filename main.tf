@@ -28,8 +28,8 @@ data "template_file" "container_definition" {
   template = file("${path.module}/container_definition.json.tpl")
   vars = {
     db_connection_url = data.terraform_remote_state.remote_state.outputs.rds_connection_url
-    line_token = var.line_token
-    yu_line_token = var.yu_line_token
+    line_token = var.LINE_TOKEN
+    yu_line_token = var.YU_LINE_TOKEN
     awslogs_group = var.cloudwatch_group
     awslogs_region = data.aws_region.region.name
     awslogs_prefix = var.name_prefix
@@ -38,6 +38,8 @@ data "template_file" "container_definition" {
 
 resource "aws_ecs_task_definition" "ecs_task_definition" {
   family = "${var.name_prefix}-ecs-task-definition"
+  task_role_arn = data.terraform_remote_state.remote_state.outputs.task_role
+  execution_role_arn = data.terraform_remote_state.remote_state.outputs.task_execution_role
   container_definitions = data.template_file.container_definition.rendered
 }
 

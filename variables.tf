@@ -9,12 +9,12 @@ variable "name_prefix" {
   default = "deerpark"
 }
 
-variable "line_token" {
+variable "LINE_TOKEN" {
   type = string
   default = "line_token"
 }
 
-variable "yu_line_token" {
+variable "YU_LINE_TOKEN" {
   type = string
   default = "yu_line_token"
 }
