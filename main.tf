@@ -48,4 +48,6 @@ resource "aws_ecs_service" "ecs_service" {
   cluster = data.terraform_remote_state.remote_state.outputs.ecs_cluster_id
   task_definition = aws_ecs_task_definition.ecs_task_definition.arn
   desired_count = 1
+  deployment_minimum_healthy_percent = 0
+  deployment_maximum_percent = 100
 }
