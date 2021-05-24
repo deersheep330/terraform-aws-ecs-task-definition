@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket = "deerpark-terraform-state"
-    key = "terraform-aws-ecs-task-definition/terraform.tfstate"
+    key = "rent-service/terraform.tfstate"
     region = "us-east-2"
   }
 }
@@ -19,14 +19,18 @@ data "terraform_remote_state" "remote_state" {
   }
 }
 # data.terraform_remote_state.remote_state.outputs.ecs_cluster_id
+# data.terraform_remote_state.remote_state.outputs.task_role
+# data.terraform_remote_state.remote_state.outputs.task_execution_role
+# data.terraform_remote_state.remote_state.outputs.rds_connection_url
 
 resource "aws_cloudwatch_log_group" "cloudwatch_log_group" {
   name = var.cloudwatch_group
 }
 
 data "template_file" "container_definition" {
-  template = file("${path.module}/container_definition.json.tpl")
+  template = file("${path.module}/container-definition.json.tpl")
   vars = {
+    image = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/rent:latest"
     db_connection_url = data.terraform_remote_state.remote_state.outputs.rds_connection_url
     line_token = var.LINE_TOKEN
     yu_line_token = var.YU_LINE_TOKEN

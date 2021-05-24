@@ -1,10 +1,10 @@
 [
   {
     "essential": true,
+    "name": "rent-container",
     "memory": 256,
-    "name": "rent-service",
     "cpu": 128,
-    "image": "696324379330.dkr.ecr.us-east-2.amazonaws.com/repo-svc-rent:latest",
+    "image": "${image}",
     "environment": [
       { "name": "DB_CONNECTION_URL", "value": "${db_connection_url}" },
       { "name": "LINE_TOKEN", "value": "${line_token}" },

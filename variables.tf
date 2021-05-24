@@ -1,12 +1,12 @@
 variable "cloudwatch_group" {
   type = string
-  default = "deerpark-ecs-cloudwatch"
+  default = "rent-service"
 }
 
 variable "name_prefix" {
   description = "Name prefix of each resources"
   type = string
-  default = "deerpark"
+  default = "rent-service"
 }
 
 variable "LINE_TOKEN" {
