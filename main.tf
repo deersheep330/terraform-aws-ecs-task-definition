@@ -8,6 +8,8 @@ terraform {
 
 provider "aws" {}
 
+data "aws_caller_identity" "current" {}
+
 data "aws_region" "region" {}
 
 data "terraform_remote_state" "remote_state" {
@@ -30,7 +32,7 @@ resource "aws_cloudwatch_log_group" "cloudwatch_log_group" {
 data "template_file" "container_definition" {
   template = file("${path.module}/container-definition.json.tpl")
   vars = {
-    image = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/rent:latest"
+    image = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${data.aws_region.region.name}.amazonaws.com/rent:latest"
     db_connection_url = data.terraform_remote_state.remote_state.outputs.rds_connection_url
     line_token = var.LINE_TOKEN
     yu_line_token = var.YU_LINE_TOKEN
